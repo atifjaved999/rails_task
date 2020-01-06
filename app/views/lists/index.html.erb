@@ -1,0 +1,38 @@
+<div id="lists">
+  <h1>Lists</h1>
+  <span class="float-right">
+    <%= link_to 'New List', new_list_path, class: 'btn btn-dark btn-sm' %>
+  </span><br><br>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Country</th>
+        <th>City</th>
+        <th>Information File</th>
+        <th colspan="3">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% if @lists.any? %>
+        <% @lists.each do |list| %>
+          <tr>
+            <td><%= list.id %></td>
+            <td><%= list.name %></td>
+            <td><%= list.country %></td>
+            <td><%= list.city %></td>
+            <td><%= file_link(list.information_file) %></td>
+
+            <td><%= link_to 'Show', list, class: 'btn btn-primary btn-sm' %></td>
+            <td><%= link_to 'Edit', edit_list_path(list), class: 'btn btn-primary btn-sm' %></td>
+            <td><%= link_to 'Destroy', list, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr><td colspan="6"><p>No record found.</p></td></tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

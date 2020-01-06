@@ -1,0 +1,74 @@
+<div class="col-md-6">
+  <%= form_with(model: list, local: true) do |form| %>
+    <% if list.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(list.errors.count, "error") %> prohibited this list from being saved:</h2>
+
+        <ul>
+        <% list.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= form.label :name %>
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :country %>
+      <%= form.select :country, @countries, {}, { id: 'select_country', :class=>'chosen-select'} %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :city %>
+      <%= form.select :city, @cities ? @cities : [] , {}, id: 'select_city', :class=>'chosen-select' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :information_file %>
+      <%= form.file_field :information_file, class: 'form-control' %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit class: 'btn btn-success' %>
+      <%= link_to 'Back', lists_path, class: 'btn btn-dark' %>
+    </div>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+
+  $(function() {
+    $('.chosen-select').chosen({
+      allow_single_deselect: true,
+      no_results_text: 'No results matched',
+      width: "100%"
+    });
+
+  });
+
+  $('#select_country').on('change', function(evt) {
+    loadCities();
+  });
+
+  function loadCities(){
+    $.ajax({
+       url: '/lists/cities',
+       data: {
+        country: $("#select_country option:selected").val(),
+        country_text: $("#select_country option:selected").text()
+      },
+      method: 'GET',
+      success: function(data) {
+       $('#select_city').empty();
+       $('#select_city').append(data);
+       $('#select_city').trigger("chosen:updated");
+
+       }
+    });
+  }
+
+</script>

@@ -1,0 +1,27 @@
+<!-- <center><h1 border="1"> <%#= @message %></h1></center> -->
+<div class="alert alert-dark" role="alert">
+  <%= @message %>
+</div>
+<br>
+<p>
+  <strong>Name:</strong>
+  <%= @list.name %>
+</p>
+
+<p>
+  <strong>Country:</strong>
+  <%= @list.country %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @list.city %>
+</p>
+
+<p>
+  <strong>Information File:</strong>
+  <%= file_link(@list.information_file) %>
+</p>
+
+<%= link_to 'Edit', edit_list_path(@list), class: 'btn btn-primary btn-sm' %> 
+<%= link_to 'Back', lists_path, class: 'btn btn-dark btn-sm' %>
